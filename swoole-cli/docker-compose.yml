@@ -26,6 +26,7 @@ services:
         PHP_VERSION: ${PHP_VERSION}
     ports:
       - 7007:7007
+      - 9001:9001
     volumes:
       - /www/htdocs:/var/www
       - /wwwlogs:/wwwlogs
@@ -35,8 +36,10 @@ services:
     command: php bin/server
     environment:
       #      - dockerhost=192.168.45.22
-      - PHP_IDE_CONFIG=serverName=dockerhost
-      - XDEBUG_CONFIG=remote_enable=1 remote_port=9001 remote_host=192.168.45.22 remote_connect_back=on idekey=PHPSTORM remote_handler=dbgp remote_autostart=1 remote_mode=req
+      - PHP_IDE_CONFIG=serverName=192.168.45.36
+      - XDEBUG_CONFIG=remote_enable=1 remote_port=9000 remote_host=192.168.45.36 remote_connect_back=on idekey=PHPSTORM remote_handler=dbgp remote_autostart=1 remote_mode=req
       - ENVIRONMENT=local
+    extra_hosts:
+      - "testserver:192.168.45.36"
 networks:
   default:
