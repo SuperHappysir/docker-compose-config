@@ -1,0 +1,42 @@
+version: "3"
+services:
+  swoolecli:
+    build:
+      context: .
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+    container_name: swoolecli
+    tty: true
+    expose:
+      - 9000
+    volumes:
+      - ${PHP_INI_PATH}:/usr/local/etc/php/php.ini:ro
+    restart: always
+    networks:
+      - default
+    environment:
+      - PHP_IDE_CONFIG=serverName=dockerhost
+      - XDEBUG_CONFIG=remote_enable=1 remote_port=9001 remote_host=192.168.45.22 remote_connect_back=on idekey=PHPSTORM remote_handler=dbgp remote_autostart=1 remote_mode=req
+      - ENVIRONMENT=local
+
+  e-frame:
+    build:
+      context: .
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+    ports:
+      - 7007:7007
+    volumes:
+      - /www/htdocs:/var/www
+      - /wwwlogs:/wwwlogs
+      - /home/smile/.ssh:/root/.ssh
+    tty: true
+    working_dir: /var/www/gott-trade-center
+    command: php bin/server
+    environment:
+      #      - dockerhost=192.168.45.22
+      - PHP_IDE_CONFIG=serverName=dockerhost
+      - XDEBUG_CONFIG=remote_enable=1 remote_port=9001 remote_host=192.168.45.22 remote_connect_back=on idekey=PHPSTORM remote_handler=dbgp remote_autostart=1 remote_mode=req
+      - ENVIRONMENT=local
+networks:
+  default:
