@@ -27,10 +27,8 @@ RUN \
           libgsasl-dev
 
 # 安装扩展
-RUN docker-php-ext-install mysqli mbstring pdo pdo_mysql tokenizer xml pcntl bcmath sockets
-RUN pecl channel-update pecl.php.net \
-    && pecl install mcrypt-1.0.1 mongodb \
-    && docker-php-ext-enable mongodb
+RUN docker-php-ext-install mysqli pdo pdo_mysql tokenizer xml pcntl bcmath sockets
+RUN pecl channel-update pecl.php.net
 
 # Add a non-root user:
 ARG PUID=1000
@@ -59,11 +57,11 @@ RUN \
 
 # Install sdebug package:
 WORKDIR /tmp
-RUN \
-  git clone https://github.com/mabu233/sdebug.git \
-  && cd sdebug \
-  && sh rebuild.sh \
-  && docker-php-ext-enable xdebug
+#RUN \
+#  git clone https://github.com/mabu233/sdebug.git \
+#  && cd sdebug \
+#  && sh rebuild.sh \
+#  && docker-php-ext-enable xdebug
 
 #
 #--------------------------------------------------------------------------

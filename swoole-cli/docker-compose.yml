@@ -26,7 +26,10 @@ services:
         PHP_VERSION: ${PHP_VERSION}
     ports:
       - 7007:7007
-      - 9001:9001
+      - 7008:7008
+      - 7009:7009
+      - 7012:7012
+      - 9512:9512
       - 10000:10000
     volumes:
       - /www/htdocs:/var/www
